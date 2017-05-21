@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load custom_markdown %}
+
+{% block content %}
+<div class="posts">
+
+        <section class="post">
+            <header class="post-header">
+                <h2 class="post-title">{{ post.title }}</h2>
+
+                    <p class="post-meta">
+                        Time:  <a class="post-author" href="#">{{ post.publish_date }}</a> <a class="post-category post-category-js" href="{% url "type" post.tag %}">{{ post.tag }}</a>
+                    </p>
+            </header>
+
+                <div class="post-description">
+                    <p style="word-wrap:break-word; word-break:normal;">
+                        {{ post.content|truncatewords:100 }}
+                    </p>
+                </div>
+                    <a class="pure-button" href="javascript:history.back(-1)">Back</a>
+
+        </section>
+
+</div><!-- /.blog-post -->
+{% endblock %}

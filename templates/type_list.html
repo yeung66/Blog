@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="title">
+    <h1 class="subhead" style="font-size: 30px">所有文章类别</h1></div>
+    <div class="">
+        {% for title in title_list %}
+
+            <div style="padding-bottom: 12px;"><span class="title" style="text-decoration: underline;font-size: 24px;">{{ title.0.tag }}</span>
+            <button class="button-small pure-button" style="background-color: white;padding-bottom: 0;" onclick="show(this)" name="{{ title.0.tag }}">+</button></div>
+            <div id="{{ title.0.tag }}" style="display: none">
+            {% for t in title %}
+            <h3 class="subhead"><a href="{%   url 'detail' t.id %}">{{ t.title }}</a></h3>
+                {% endfor %}
+            </div>
+
+        {% endfor %}
+    </div>
+
+    <script>
+        function show(t) {
+            var name=t.getAttribute('name');
+            var target = document.getElementById(name);
+            if(target.style.display == 'none'){target.style='display:display';}
+            else{target.style.display='none';}
+        }
+    </script>
+{% endblock %}

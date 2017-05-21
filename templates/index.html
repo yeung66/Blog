@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load custom_markdown %}
+{% block content %}
+<div class="posts">
+    {% for post in post_list %}
+        <section class="post">
+            <header class="post-header">
+                <h2 class="post-title">{{ post.title }}</h2>
+
+                    <p class="post-meta">
+                        Time:  <a class="post-author" href="#">{{ post.publish_date }}</a> <a class="post-category post-category-js" href="{% url "type" type=post.tag %}">{{ post.tag }}</a>
+                    </p>
+            </header>
+
+                <div class="post-description">
+                    <p style="word-wrap:break-word; word-break:normal;">
+                        {{ post.content |truncatechars_html:100}}
+                    </p>
+                </div>
+
+            <a class="pure-button" href="{% url "detail" id=post.id %}">Read More >>> </a>
+        </section>{% endfor %}
+        {% if post_list.has_other_pages %}
+            <div class="pure-botton-group" role="group">
+            {% if post_list.has_previous %}
+                <a class="pure-button pure-button-primary" href="?page={{ post_list.previous_page_number }}">&laquo;</a>
+            {% else %}
+                <a class="pure-button pure-button-disabled">&laquo;</a>
+            {% endif %}
+            {% for i in post_list.paginator.page_range %}
+                {% if post_list.number == i %}
+                    <a class="pure-button pure-button-disabled">{{ i }} </a>
+                {% else %}
+                    <a class="pure-button" href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
+            {% endfor %}
+             {% if post_list.has_next %}
+                <a class="pure-button pure-button-primary" href="?page={{ post_list.next_page_number }}">&raquo;</a>
+            {% else %}
+                <a class="pure-button pure-button-disabled">&raquo;</a>
+            {% endif %}
+            </div>
+        {% endif %}
+
+</div><!-- /.blog-post -->
+{% endblock %}
